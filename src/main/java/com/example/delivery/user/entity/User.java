@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "users", check = @CheckConstraint(
-        name = "users_username_length_check",
-        constraint = "char_length(username) between 4 and 20"))
+        name = "users_login_id_length_check",
+        constraint = "char_length(login_id) between 4 and 20"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -26,8 +26,8 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String username;
+    @Column(name = "login_id", nullable = false, unique = true, length = 20)
+    private String loginId;
 
     @Column(nullable = false, length = 255)
     private String password;
@@ -37,8 +37,8 @@ public class User extends BaseEntity {
     private UserRole role;
 
     // encodedPassword must be a BCrypt hash produced by the service.
-    public User(String username, String encodedPassword, UserRole role) {
-        this.username = username;
+    public User(String loginId, String encodedPassword, UserRole role) {
+        this.loginId = loginId;
         this.password = encodedPassword;
         this.role = role;
     }
